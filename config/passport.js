@@ -10,7 +10,7 @@ const User = require('../models/User')
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/api/v1/auth/google/callback"
+        callbackURL: "https://kariemportfolio-backend.onrender.com/api/v1/auth/google/callback"
     },
     async (accessToken, refreshToken, profile, done) => {
         // find the user in mongo db or create new one

@@ -17,11 +17,11 @@ router.get('/auth/google',
 router.get('/auth/google/callback',
     passport.authenticate('google', 
         // failure redirect to login
-        { failureRedirect: 'http://localhost:3001/LoginPage' }),
+        { failureRedirect: 'https://kariemgerges.github.io/loginPage' }),
 
     (req, res) => {
         // success redirect to blog page
-        res.redirect('http://localhost:3001/blogPage');
+        res.redirect('https://kariemgerges.github.io/blogPage');
     });
 
 
@@ -35,7 +35,7 @@ router.get('/logout', (req, res) => {
             if (err) {
                 return next(err);
             }
-            res.redirect('http://localhost:3001/LoginPage'); // Redirect to the homepage or login page
+            res.redirect('https://kariemgerges.github.io/loginPage'); // Redirect to the homepage or login page
         });
     });
 });
