@@ -17,11 +17,11 @@ router.get('/auth/google',
 router.get('/auth/google/callback',
     passport.authenticate('google', 
         // failure redirect to login
-        { failureRedirect: 'https://kariemgerges.github.io/loginPage' }),
+        { failureRedirect: 'https://kariemgerges.github.io/portfolioPage/#/' }),
 
     (req, res) => {
         // success redirect to blog page
-        res.redirect('https://kariemgerges.github.io/blogPage');
+        res.redirect('https://kariemgerges.github.io/portfolioPage/#/blogPage');
     });
 
 
@@ -35,7 +35,7 @@ router.get('/logout', (req, res) => {
             if (err) {
                 return next(err);
             }
-            res.redirect('https://kariemgerges.github.io/loginPage'); // Redirect to the homepage or login page
+            res.redirect('https://kariemgerges.github.io/portfolioPage/#/loginPage'); // Redirect to the homepage or login page
         });
     });
 });
