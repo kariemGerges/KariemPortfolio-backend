@@ -33,7 +33,10 @@ app.use(session({
   secret: process.env.SESSION_SECRET, // session secret
   resave: false, // force session to be saved to the store
   saveUninitialized: false, // force the uninitialized session to be saved
-  cookie: { secure: false, maxAge: 3600000 } // session expires after 1 hour and replace with true when production
+  cookie: { secure: false, 
+            maxAge: 3600000, // session expires after 1 hour and replace with true when production
+            sameSite: 'None' 
+          } 
 }));
 
 // passport middleware

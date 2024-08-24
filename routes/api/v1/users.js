@@ -17,7 +17,7 @@ router.get('/auth/google',
 router.get('/auth/google/callback',
     passport.authenticate('google', 
         // failure redirect to login
-        { failureRedirect: 'https://kariemgerges.github.io/portfolioPage/#/' }),
+        { failureRedirect: 'https://kariemgerges.github.io/portfolioPage/#/ErrLandingPage' }),
 
     (req, res) => {
         // success redirect to blog page
@@ -43,7 +43,12 @@ router.get('/logout', (req, res) => {
 
 // Router to get the current user
 router.get('/current_user', (req, res) => {
-    res.send(req.user);
+    if (req.isAuthenticated) {
+        return res.send(req.user);
+    } else {
+        return res.status(401).send('Unauthorized Access');
+    }    
+
 });
 
 
