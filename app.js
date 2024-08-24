@@ -35,7 +35,6 @@ app.use(session({
   saveUninitialized: false, // force the uninitialized session to be saved
   cookie: { secure: false, 
             maxAge: 3600000, // session expires after 1 hour and replace with true when production
-            sameSite: 'None' 
           } 
 }));
 
