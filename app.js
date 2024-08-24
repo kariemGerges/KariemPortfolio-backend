@@ -21,7 +21,7 @@ const app = express();
 
 // middleware 
 const corsOptions = {
-  origin: 'https://kariemgerges.github.io/portfolioPage/#/' || 'http://localhost:3000',
+  origin: 'https://kariemgerges.github.io' || 'http://localhost:3000',
   credentials: true,
   optionsSuccessStatus: 200
 };
