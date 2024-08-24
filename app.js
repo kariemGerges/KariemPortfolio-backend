@@ -27,11 +27,29 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: true
-};
-app.use(cors(corsOptions));
+
+// cors
+
+const allowedOrigins = [
+        'http://localhost:3000', 
+        'http://localhost:3001',
+        'https://kariemgerges.github.io/portfolioPage/#'
+      ];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not ' +
+                        'allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true // Allow cookies and other credentials in requests
+}));
 
 
 // session middleware
@@ -41,6 +59,7 @@ app.use(session({
   saveUninitialized: false, // force the uninitialized session to be saved
   cookie: { secure: false, 
             maxAge: 3600000, // session expires after 1 hour and replace with true when production
+
           } 
 }));
 
