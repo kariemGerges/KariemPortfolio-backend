@@ -20,6 +20,13 @@ const authRouters = require('./routes/api/v1/users');
 const app = express();
 
 // middleware 
+const corsOptions = {
+  origin: 'https://kariemgerges.github.io/portfolioPage/#/' || 'http://localhost:3000',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,27 +34,29 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
-// const corsOptions = {
-//   origin: 'http://localhost:3000',
-//   credentials: true
-// };
-
-// app.use(cors(corsOptions));
-
-app.use(cors({
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-}));
 
 
 // session middleware
+//app.use(session({
+//   secret: process.env.SESSION_SECRET, // session secret
+//   resave: false, // force session to be saved to the store
+//   saveUninitialized: false, // force the uninitialized session to be saved
+
+//   cookie: {
+//             secure: false, 
+//             maxAge: 3600000, // session expires after 1 hour and replace with true when production
+//           } 
+// }));
+
 app.use(session({
-  secret: process.env.SESSION_SECRET, // session secret
-  resave: false, // force session to be saved to the store
-  saveUninitialized: false, // force the uninitialized session to be saved
-  cookie: { secure: false, 
-            maxAge: 3600000, // session expires after 1 hour and replace with true when production
-            
-          } 
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production', // true in production
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 3600000 // 1 hour
+  }
 }));
 
 // passport middleware
