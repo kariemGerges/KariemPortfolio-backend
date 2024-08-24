@@ -43,12 +43,8 @@ router.get('/logout', (req, res) => {
 
 // Router to get the current user
 router.get('/current_user', (req, res) => {
-    if (req.isAuthenticated) {
-        return res.send(req.user);
-    } else {
-        return res.status(401).send('Unauthorized Access');
-    }    
-
+    res.send(req.user);
+    // console.log(req.session);
 });
 
 
