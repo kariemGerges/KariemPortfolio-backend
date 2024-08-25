@@ -43,9 +43,14 @@ router.get('/logout', (req, res) => {
 
 // Router to get the current user
 router.get('/current_user', (req, res) => {
-    res.send(req.user);
-    // console.log(req.session);
+    if (req.user) {
+        res.status(200).json(req.user);
+        console.log('User info:', req.user);
+    } else {
+        res.status(401).json({ error: "Unauthorized: No user logged in" });
+    }
 });
+
 
 
 
