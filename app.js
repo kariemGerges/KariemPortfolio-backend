@@ -16,16 +16,22 @@ const apiRouterV2 = require('./routes/api/v1/emailSender');
 const apiPostsRouter = require('./routes/api/v1/post');
 const apiCategoryRouter = require('./routes/api/v1/category');
 const authRouters = require('./routes/api/v1/users');
-const MongoStore = require('connect-mongo');
+// const MongoStore = require('connect-mongo');
 
 const app = express();
 
 // middleware 
-const corsOptions = {
-  origin: ['https://kariemgerges.github.io', 'http://localhost:3000'],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization"],
+  const corsOptions = {
+    origin: [
+        'https://kariemgerges.github.io', // Your production frontend
+        'http://localhost:3000'           // Your local development frontend
+    ],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // Allow credentials (cookies, authorization headers, TLS client certificates)
+    allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["Content-Length", "X-JSON"], // Optional: specify any headers that should be exposed
+    preflightContinue: false, // Pass to next middleware if options request is valid
+    optionsSuccessStatus: 204 // Status code for successful preflight response
 };
 
 app.use(cors(corsOptions));
@@ -35,8 +41,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-
-
 
 // session middleware
 //app.use(session({
@@ -54,14 +58,14 @@ app.use(
     secret: process.env.SESSION_SECRET, // Use a strong secret from your .env file
     resave: false, // Don't save session if unmodified
     saveUninitialized: false, // Don't create session until something stored
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_CONNECTION_STRING, // MongoDB connection string from your .env file
-    }),
+    // store: MongoStore.create({
+    //   mongoUrl: process.env.MONGO_CONNECTION_STRING, // MongoDB connection string from your .env file
+    // }),
     cookie: {
       secure: process.env.NODE_ENV === 'production', // Secure cookies in production (requires HTTPS)
       httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
-      maxAge: 24 * 60 * 60 * 1000, // 1 day session expiration
-      sameSite: 'lax', // Helps with CSRF attacks, especially in modern browsers
+      maxAge: 1 * 60 * 60 * 1000, // hours * minutes * seconds * milliseconds
+      sameSite: 'none', // Helps with CSRF attacks, especially in modern browsers
     },
   })
 );

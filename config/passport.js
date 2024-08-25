@@ -1,7 +1,6 @@
 require('dotenv').config();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const mongoose = require('mongoose');
 const User = require('../models/User')
 
 
@@ -40,14 +39,18 @@ passport.use(new GoogleStrategy({
 
 // serialize and deserialize to handle session and data storage in the session
 passport.serializeUser((user, done) => {
+    console.log('serializeUser ', user);
     done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
+    console.log('deserializeUser ', id);
     try {
         const user = await User.findById(id);
+        console.log('user found: ', user);
         done(null, user);
     } catch (err) {
+        console.error('Error deserializing user: ', err);
         done(err, null);
     }
 });
