@@ -36,7 +36,7 @@ router.get('/logout', (req, res, next) => {
                 return next(err);
             }
             console.log('Session destroyed successfully');
-            res.clearCookie('connect.sid', { path: '/' }); // Clear the session cookie
+            res.clearCookie('connect.sid', { path: '/', domain: '.onrender.com' }); // Clear the session cookie
             res.redirect('https://kariemgerges.github.io/portfolioPage/#/loginPage'); // Redirect to the homepage or login page
         });
     });
@@ -47,8 +47,8 @@ router.get('/logout', (req, res, next) => {
 router.get('/current_user', (req, res) => {
     console.log('Session:', req.session);
     console.log('User:', req.user);
-    if (req.user) {
-        res.status(200).send(req.user);
+    if (req.isAuthenticated()) {
+        res.status(200).json(req.user);
     } else {
         res.status(401).json({ error: "Unauthorized: No user logged in" });
     }
