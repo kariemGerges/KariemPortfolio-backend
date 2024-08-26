@@ -24,7 +24,10 @@ const app = express();
 
 // middleware 
   const corsOptions = {
-    origin: 'https://kariemgerges.github.io',
+    origin: [
+        'https://kariemgerges.github.io', // Your production frontend
+        'http://localhost:3000'           // Your local development frontend
+    ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // Allow credentials (cookies, authorization headers, TLS client certificates)
     allowedHeaders: ["Content-Type", "Authorization"],
