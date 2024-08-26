@@ -9,6 +9,8 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
+// passport config
+require('./config/passport');
 
 
 //  Routes
@@ -22,10 +24,7 @@ const app = express();
 
 // middleware 
   const corsOptions = {
-    origin: [
-        'https://kariemgerges.github.io', // Your production frontend
-        'http://localhost:3000'           // Your local development frontend
-    ],
+    origin: 'https://kariemgerges.github.io',
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // Allow credentials (cookies, authorization headers, TLS client certificates)
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -65,8 +64,8 @@ app.use(
       secure: process.env.NODE_ENV === 'production', // Secure cookies in production (requires HTTPS)
       httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
       maxAge: 1 * 60 * 60 * 1000, // hours * minutes * seconds * milliseconds
-      sameSite: 'none', // Helps with CSRF attacks, especially in modern browsers
-      domain: '.onrender.com'
+      sameSite: 'None', // Helps with CSRF attacks, especially in modern browsers
+      // domain: '.onrender.com'
     },
   })
 );
@@ -75,8 +74,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// passport config
-require('./config/passport');
+
 
 // mongo connection 
 mongoose.set('strictQuery', false);

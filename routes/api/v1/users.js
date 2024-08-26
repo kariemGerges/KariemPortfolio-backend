@@ -36,7 +36,7 @@ router.get('/logout', (req, res, next) => {
                 return next(err);
             }
             console.log('Session destroyed successfully');
-            res.clearCookie('connect.sid', { path: '/', domain: '.onrender.com' }); // Clear the session cookie
+            res.clearCookie('connect.sid', { path: '/' }); // Clear the session cookie
             res.redirect('https://kariemgerges.github.io/portfolioPage/#/loginPage'); // Redirect to the homepage or login page
         });
     });
