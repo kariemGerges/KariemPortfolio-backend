@@ -63,8 +63,9 @@ app.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_CONNECTION_STRING, // MongoDB connection string from your .env file
     }),
+    name: 'sessionIdKG',
     cookie: {
-      secure: process.env.NODE_ENV === 'production', // Secure cookies in production (requires HTTPS)
+      secure: false, //process.env.NODE_ENV === 'production', // Secure cookies in production (requires HTTPS)
       httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
       maxAge: 1 * 60 * 60 * 1000, // hours * minutes * seconds * milliseconds
       sameSite: 'None', // Helps with CSRF attacks, especially in modern browsers
