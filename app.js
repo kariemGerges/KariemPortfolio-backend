@@ -65,11 +65,10 @@ app.use(
     }),
     name: 'sessionIdKG',
     cookie: {
-      secure: false, //process.env.NODE_ENV === 'production', // Secure cookies in production (requires HTTPS)
+      secure: process.env.NODE_ENV === 'production', // Secure cookies in production (requires HTTPS)
       httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
       maxAge: 1 * 60 * 60 * 1000, // hours * minutes * seconds * milliseconds
-      sameSite: 'None', // Helps with CSRF attacks, especially in modern browsers
-      // domain: '.onrender.com'
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-site cookies in production
     },
   })
 );

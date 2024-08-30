@@ -20,6 +20,12 @@ router.get('/auth/google/callback',
         { failureRedirect: 'https://kariemgerges.github.io/portfolioPage/#/ErrLandingPage' }),
 
     (req, res) => {
+        req.session.save((err) => {
+            if (err) {
+                console.log('err in saving session', err);
+                return res.redirect('https://kariemgerges.github.io/portfolioPage/#/ErrLandingPage');
+            }
+        })
         // success redirect to blog page
         res.redirect('https://kariemgerges.github.io/portfolioPage/#/blogPage');
     });
